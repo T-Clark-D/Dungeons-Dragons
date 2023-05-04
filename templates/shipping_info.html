@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}{{ super() }}{% endblock %}
+
+{% block body %}
+    <div class="col-sm-5">
+        <h1>Thank you for giving us your shipping information!</h1>
+        <dl>
+            {% for key in form %}
+                <dt>{{ key }}</dt><dd>{{ form[key] }}</dd>
+            {% endfor %}
+        </dl>
+    </div>
+{% endblock %} <!-- content -->
+
+{% block userlogin %}
+{% endblock %}
+{% block Admin %}
+{% endblock %}

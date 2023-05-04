@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{{ super() }} - Contact{% endblock %}
+
+{% block body %}
+    <div class="col-sm-3">
+        <h1>Contact</h1>
+        <dl class="row">
+            <dt class="col-md-6">Developer</dt>
+            <dd class="col-md-6">Tomas Clark Dumoulin</dd>
+
+            <dt class="col-md-6">Email</dt>
+            <dd class="col-md-6"><a href="mailto:t.clark.dumoulin@gmail.com">t.clark.dumoulin@gmail.com</a></dd>
+
+            <dt class="col-md-6">Occupation</dt>
+            <dd class="col-md-6">Software Developer</dd>
+        </dl>
+    </div>
+
+    <div class="col-md-6">
+        <h1>Contact Us</h1>
+        {{ quick_contact_form(form, '/contact') }}
+    </div>
+    </br>
+{% endblock %}
+{% block userlogin %}
+{% endblock %}

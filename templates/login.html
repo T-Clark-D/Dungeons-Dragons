@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}{{ super() }} - Contact Response{% endblock %}
+
+{% block body %}
+
+<body>
+{% for message in get_flashed_messages() %}
+    {{ message }}<br/>
+{% endfor %}
+<form action="/login" method="post">
+    {{ form.csrf_token }}
+    {{ form.username.label }} {{ form.username }}<br/>
+    {{ form.password.label }} {{ form.password }}<br/>
+    {{ form.submit }}
+</form>
+</body>
+{% endblock %}
+{% block userlogin %}
+{% endblock %}
+{% block Admin %}
+{% endblock %}

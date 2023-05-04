@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<!– hello.html A document -->
+<html lang=“en” xmlns="http://www.w3.org/1999/html">
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <meta name="description" content="Dungeons and Dragons Tool">
+        <meta name="author" content=”Clark">
+
+        <title>{% block title %}Dungeons&Dragons{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+              crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <style>body {
+            padding-left: 50px;
+            padding-top: 60px;
+            color: white;
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        }
+
+        a {
+            color: lightseagreen;
+            font-weight: bold;
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+
+        }
+        </style>
+
+    {% endblock %}
+
+</head>
+<a name="top"></a>
+{% block navbar %}
+    <nav class="navbar navbar-expand-md navbar-dark bg-danger fixed-top">
+        <a class="navbar-brand" href="/">Dungeons&Dragons : {{ current_user.id }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/character_graveyard">Character Graveyard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/roll_dice">Dice Roller</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/player_leveling">Player Leveling</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/external_resources">External Resources</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact us</a>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="/merch">Merchandise</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}
+
+<body background="https://cdn.wallpapersafari.com/45/85/QoE1WO.jpg">
+
+
+
+
+{% macro quick_contact_form(form, action) -%}
+    <form action="{{ action }}" class="form" method="POST">
+        {% for field in form %}
+            {% if field.type in ('HiddenField', 'CSRFTokenField') %}
+                {{ field() }}
+            {% elif field.type == 'SubmitField' %}
+                {{ field(class_="btn btn-danger") }}
+            {% else %}
+                {{ form_group(field) }}
+            {% endif %}
+        {% endfor %}
+    </form>
+{% endmacro %}
+
+{% macro form_group(field) -%}
+    <div class="form-group row required">
+        {{ field.label(class_="col-sm-2 col-form-label") }}
+        {% if field.type in ['MultiCheckboxField', 'RadioField'] %}
+            {% if field.errors %}
+                <div class="form-control is-invalid">
+            {% else %}
+                <div class="form-control col-sm-8">
+            {% endif %}
+            {% for choice in field %}
+                <div class="form-check form-check-inline">
+                    {{ choice(class_="form-check-input") }}
+                    {{ choice.label(class_="form-check-label") }}
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            {% if field.errors %}
+                {{ field(class_="form-control is-invalid") }}
+            {% else %}
+                {{ field(class_="form-control col-sm-8") }}
+            {% endif %}
+        {% endif %}
+        {% if field.errors %}
+            {%  for error in field.errors %}
+                <div class="invalid-feedback">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% block body %}
+    <div>
+        <h1>Welcome to the Dungeon's & Dragons utility website for players and Dungeon Masters alike.</h1>
+        <p>Click on the different sections in the navigation bar to start exploring the site</p>
+    </div>
+{% endblock %}
+
+{% block userlogin %}
+{% for message in get_flashed_messages() %}
+    {{ message }}<br/>
+{% endfor %}
+{% if current_user.is_authenticated %}
+    <h1>Welcome {{ current_user.id }}!</h1>
+    {%  if current_user.email and current_user.phone %}
+    <dl>
+        <dt>Email:</dt>
+        <dd>{{ current_user.email }}</dd>
+        <dt>Phone:</dt>
+        <dd>{{ current_user.phone }}</dd>
+    </dl>
+        {% endif %}
+    <a href="/logout">Logout</a>
+{% else %}
+    <h1>Welcome Stranger!</h1>
+    <a href="/login">Login</a>
+{% endif %}
+    {% if current_user.is_authenticated %}
+        <h1>Here is the Feedback left by your users</h1>
+    {% endif %}
+{% endblock %}
+{% block Admin %}
+
+    <div style="col-md-6">
+    {% if current_user.is_authenticated %}
+         <ul style="list-style-type:square;">
+            {% for doc in doc_list %}
+                    {% for col in doc[:3] %}
+                            <li style="background: black">{{ col }}</li>
+                    {% endfor %}
+                </br>
+            {% endfor %}
+         </ul>
+    {% endif %}
+    </div>
+{% endblock %}
+</body>
+<footer>
+    {% block footer %}
+        <a href="#top">Back to top of page</a>
+    {% endblock %}
+</footer>
+</html>
