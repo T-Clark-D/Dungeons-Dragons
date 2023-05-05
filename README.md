@@ -1,9 +1,9 @@
 # Dungeons-Dragons
- A dungeons and Dragons Made to learn Flask and basic Databasing
+ A dungeons and Dragons Website made to learn Flask and basic Databasing
 
- Web Framework: Flask
- DataBase: SQLite and SQLAlchemy
- Interactablility; JavaScript
+* **Web Framework:** Flask
+* **DataBase:** SQLite and SQLAlchemy
+* **Interactablility:** JavaScript
 
 Landing Page
 ![Landing Page 2](https://user-images.githubusercontent.com/53094076/236526544-137a2652-4db6-4499-84e2-02ae14c0a314.png)
